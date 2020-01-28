@@ -1,0 +1,120 @@
+﻿@using Microsoft.AspNetCore.SignalR.Client
+
+<div class="card border-primary mb-3">
+    @if (agents.Count > 0)
+    {
+        @foreach (var agent in agents)
+        {
+            <div class="card-body">
+                <div>
+                    <div style="padding-top:5px">
+                        <h5 class="badge-primary" style="float:left">
+                            @agent
+                        </h5>
+                        <div style="float:right">
+                            <button id="ViewCast" disabled="@(IsViewingCastOf(agent))" class="btn btn-success btn-sm" @onclick="@(() => OnViewCastClicked(agent))">
+                                Iniciar
+                            </button>
+                            <button id="StopViewCast" disabled="@(!IsViewingCastOf(agent))" class="btn btn-warning btn-sm" @onclick="@(() => OnStopViewCastClicked(agent))">
+                                Detener
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+    else
+    {
+        <div class="card-body">
+            <h5 class="card-header badge-warning">No hay pacientes retransmitiendo actualmente.</h5>
+        </div>
+    }
+</div>
+
+<div class="border" style="width:100%;height:50%">
+    <img id='screenImage' src="@imageSource" style="width:100%;height:50%" />
+</div>
+
+
+@code{
+
+
+
+    private List<string> agents = new List<string>();
+
+    HubConnection connection; // test
+    string imageSource = null;
+    string chatMessage = null;
+    string message = null;
+    string CurrentViewCastAgent = null;
+
+    protected async override Task OnInitializedAsync()
+    {
+        connection = new HubConnectionBuilder()
+        .WithUrl("https://localhost:5001/ScreenCastHub")
+        .Build();
+
+        connection.On<string>("NewScreenCastAgent", NewScreenCastAgent);
+        connection.On<string>("RemoveScreenCastAgent", RemoveScreenCastAgent);
+        connection.On<string>("OnStreamCastDataReceived", OnStreamCastDataReceived);
+        connection.On<string, string>("MessageReceived", MessageReceived);
+
+        await connection.StartAsync();
+    }
+
+    bool IsViewingCastOf(string agentName)
+    {
+        return agentName == CurrentViewCastAgent;
+    }
+
+    void NewScreenCastAgent(string agentName)
+    {
+        agents.Add(agentName);
+        StateHasChanged();
+    }
+
+    void RemoveScreenCastAgent(string agentName)
+    {
+        agents.Remove(agentName);
+        imageSource = null;
+        CurrentViewCastAgent = null;
+        StateHasChanged();
+    }
+
+    void OnStreamCastDataReceived(string streamData)
+    {
+        imageSource = streamData;
+        StateHasChanged();
+    }
+
+    private async Task OnViewCastClicked(string agentName)
+    {
+        CurrentViewCastAgent = agentName;
+        await connection.InvokeAsync("AddScreenCastViewer", agentName);
+    }
+
+    private async Task OnStopViewCastClicked(string agentName)
+    {
+        CurrentViewCastAgent = null;
+        await connection.InvokeAsync("RemoveScreenCastViewer", agentName);
+        imageSource = null;
+        StateHasChanged();
+    }
+
+
+    void MessageReceived(string agentName, string message)
+    {
+        chatMessage += message;
+        StateHasChanged();
+    }
+
+    async void OnMessageSend(string message)
+    {
+        await connection.InvokeAsync("NewMessage", "Motivador", message);
+        StateHasChanged();
+        //connection.send("newMessage", username, tbMessage.value)
+        //      .then(() => tbMessage.value = "");
+    }
+}

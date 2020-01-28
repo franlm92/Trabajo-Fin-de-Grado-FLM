@@ -1,0 +1,65 @@
+﻿@page "/"
+@namespace ScreenCastApp.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ScreenCastApp</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+
+</head>
+<body>
+    <app>@(await Html.RenderComponentAsync<App>(RenderMode.ServerPrerendered))</app>
+    <script src="_framework/blazor.server.js"></script>
+
+    <div class="container">
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-12" style="height:150px;overflow:auto">
+                <ul id="messagesList"  style="padding-inline-start: 10px; list-style: none;"></ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <hr>
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+
+            <div class="col-9">
+                <input type="text" id="messageInput" style="width: 100%;">
+            </div>
+            <div class="col-3">
+                <input type="button" id="sendButton" value="Enviar" style="">
+            </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-2">
+                <img height="30" width="30" id="image_01" src="/img/image_01.jpg">
+            </div>
+            <div class="col-2">
+                <img height="30" width="30" id="image_02" src="/img/image_02.jpg">
+            </div>
+            <div class="col-2">
+                <img height="30" width="30" id="image_03" src="/img/image_03.jpg">
+            </div>
+            <div class="col-2">
+                <img height="30" width="30" id="image_04" src="/img/image_04.jpg">
+            </div>
+            <div class="col-2">
+                <img height="30" width="30" id="image_05" src="/img/image_05.jpg">
+            </div>
+        </div>
+    </div>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
+
+</body>
+</html>

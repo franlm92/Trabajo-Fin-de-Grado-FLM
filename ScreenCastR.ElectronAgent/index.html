@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Paciente</title>
+</head>
+
+<body>
+  <h2>Paciente</h2>
+  <div>
+    <h4>Nombre de usuario</h4>
+    <input type="text" id="agentName" />
+  </div>
+  <div class="row">&nbsp;</div>
+  <div>
+    <input id="startCast" type="button" value="Iniciar retransmisión">
+    <input id="stopCast" type="button" value="Detener retransmisión">
+   <!--  <canvas id='screenCanvas'></canvas> -->
+  </div>
+  <div id="lastStatus">
+
+  </div>
+  <div class="container">
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-12" style="height:150px;overflow:auto">
+            <ul id="messagesList" style="padding-inline-start: 10px; list-style: none;"></ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-12">
+            <input type="text" id="messageInput">
+            <input type="button" id="sendButton" value="Enviar">
+        </div>
+    </div>
+  </div>
+</body>
+<script>
+  
+  require('./renderer.js')
+  require('./signalr.js')
+</script>
+
+</html>
