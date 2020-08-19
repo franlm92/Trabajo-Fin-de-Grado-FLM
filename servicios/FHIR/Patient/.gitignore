@@ -1,0 +1,17 @@
+# Dependencies
+node_modules
+package-lock.json
+
+# Generated files
+*.log
+.DS_Store
+coverage
+fhir/fixtures/data/shr
+fhir/fixtures/data/uscore
+
+# Local Development Certs
+cert.pem
+key.pem
+
+# ENV Files
+.local-secrets/auth.secrets

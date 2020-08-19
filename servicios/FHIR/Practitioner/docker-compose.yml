@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  fhir:
+    depends_on:
+      - mongo
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SERVER_PORT: 3014
+      MONGO_HOSTNAME: mongo
+      RESOURCE_SERVER: http://localhost:3014/
+      AUTH_SERVER_URI: http://myauthzserver.com
+      CLIENT_ID: client
+      CLIENT_SECRET: secret
+      INTROSPECTION_URL: https://myauthzserver.com/introspect
+    ports:
+      - "3014:3014"
+    volumes:
+      - ./src:/srv/src/src
+    command: yarn nodemon
+
+  mongo:
+    image: mongo:3.6.1
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
