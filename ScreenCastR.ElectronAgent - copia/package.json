@@ -15,7 +15,7 @@
   ],
   "author": "Francisco López Muñoz",
   "devDependencies": {
-    "electron": "^6.0.0"
+    "electron": "^7.2.4"
   },
   "dependencies": {
     "@microsoft/signalr": "^3.0.0-preview8.19405.7"
