@@ -1,0 +1,61 @@
+<!DOCTYPE  html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Crear usuario</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+
+    <h4>Especifica tus datos personales:</h4>
+
+    <form>
+        <div id="myForm" class="container">
+            <div class="col-md-12 mb-3">
+                <label for="surname">Apellidos:</label>
+                <input type="text" id="newSurname" placeholder="Sánchez Martínez" required>
+            </div>
+            <div class="col-md-12 mb-3">
+                <label for="name">Nombre:</label>
+                <input type="text" id="newName" placeholder="Laura" required>
+            </div>
+            <div class="col-md-12 mb-3">
+                <label for="phone" style="display:inline">Teléfono:</label>
+                <input type="tel" id="newPhone" placeholder="(+XX) XXX XXX XXX" required>
+            </div>
+            <div class="col-md-12 mb-3">
+                <label for="gender">Sexo:</label>
+                <select id="newGender" class="user_gender">
+                    <option value="male">Hombre</option>
+                    <option value="female">Mujer</option>
+                </select>
+            </div>
+            <div class="col-md-12 mb-3">
+                <label for="name">Fecha de nacimiento:</label>
+                <input type="date" id="newBirthDate" placeholder="Laura" required>
+            </div>
+            <div class="col-md-12 mb-3">
+                <label for="name">Contraseña:</label>
+                <input type="password" id="newPass" required>
+            </div>
+        </div>
+        <div class="row" id="submit">
+            <div class="col-md-6 mb-3" style="text-align: center;">
+                <input type="submit" id="saveAgent" value="Guardar">
+            </div>
+            <div class="col-md-6 mb-3" style="text-align: center;">
+                <input type="button" id="goBack" value="Volver">
+            </div>
+        </div>
+    </form>
+</body>
+<script type="text/javascript" src="./mongo_create.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+</html>

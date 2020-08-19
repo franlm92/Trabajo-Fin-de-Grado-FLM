@@ -1,0 +1,39 @@
+﻿@page "/"
+@using ScreenCastApp.Pages
+@model LoginModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ScreenCastApp - Login</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="~/css/styles.css" rel="stylesheet" />
+
+</head>
+<body>
+    <h1>LOGIN</h1>
+
+    @using (Html.BeginForm())
+    {
+        <div id="form">
+            <p>Nombre de usuario:</p>
+            <input asp-for="User.Name" />
+
+            <p>Contraseña:</p>
+            <input asp-for="User.Password" />
+
+            <p>
+                <input type="submit" id="Submit" value="Acceder">
+            </p>
+
+            <p>
+                <a asp-page="/CreateUser">Crear nuevo usuario</a>
+            </p>
+        </div>
+    }
+</body>
+</html>

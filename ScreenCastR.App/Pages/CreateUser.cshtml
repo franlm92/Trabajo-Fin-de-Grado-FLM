@@ -1,0 +1,49 @@
+﻿@page
+@using ScreenCastApp.Pages
+@model CreateUserModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ScreenCastApp - Crear nuevo usuario</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="~/css/styles.css" rel="stylesheet" />
+
+</head>
+<body>
+    <h1>Crear nuevo usuario</h1>
+
+    @using (Html.BeginForm())
+    {
+        <p>Apellidos:</p>
+        <input asp-for="User.Surname" placeholder="Sánchez Martínez" required />
+
+        <p>Nombre:</p>
+        <input asp-for="User.Name" placeholder="Laura" required />
+
+        <p>Teléfono:</p>
+        <input asp-for="User.Phone" placeholder="(+XX) XXX XXX XXX" required />
+
+        <p>Sexo:</p>
+        <select asp-for="User.Gender" required>
+            <option value="male">Hombre</option>
+            <option value="female">Mujer</option>
+        </select>
+
+        <p>Fecha de nacimiento:</p>
+        <input asp-for="User.BirthDate" required />
+
+        <p>Contraseña:</p>
+        <input asp-for="User.Password" required />
+
+        <p>
+            <input type="submit" id="Submit" value="Crear usuario">
+        </p>
+
+    }
+</body>
+</html>

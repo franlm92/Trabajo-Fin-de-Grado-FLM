@@ -3,7 +3,6 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:5001/ScreenCastHub").build();
 const user = "Motivador";
 const message = document.getElementById("messageInput");
-//Disable send button until connection is established
 document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message) {
@@ -27,7 +26,7 @@ connection.on("ReceiveMessage", function (user, message) {
             break;
         default:
             var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            var encodedMsg = new Date().toLocaleString() + " - <b>" + user + ": </b>" + msg;
+            var encodedMsg = "<b>" + user + ": </b>" + msg;
             li.innerHTML = encodedMsg;
             break;
     }
@@ -35,7 +34,9 @@ connection.on("ReceiveMessage", function (user, message) {
     if (message == "#image_01#" || message == "#image_02#" ||
         message == "#image_03#" || message == "#image_04#" ||
         message == "#image_05#") {
-        li.innerHTML = new Date().toLocaleString() + " - <img height=\"30\" width=\"30\" src=\"https://localhost:5001/img/" + image + "\" />";
+        li.innerHTML =
+            "<img height=\"30\" width=\"30\" src=\"https://localhost:5001/img/"
+            + image + "\" />";
     }
     document.getElementById("messagesList").appendChild(li);
     li.scrollIntoView();

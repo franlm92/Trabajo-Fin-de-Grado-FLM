@@ -16,17 +16,17 @@ async function initializeSignalR() {
         .configureLogging(signalR.LogLevel.Information)
         .build();
 
-    connection.on("NewViewer", function () {
+    connection.on("NewViewer", function() {
         if (isStreaming === false)
             startStreamCast()
     });
 
-    connection.on("NoViewer", function () {
+    connection.on("NoViewer", function() {
         if (isStreaming === true)
             stopStreamCast()
     });
 
-    await connection.start().then(function () {
+    await connection.start().then(function() {
         console.log("connected");
     });
 
@@ -36,7 +36,7 @@ async function initializeSignalR() {
 initializeSignalR();
 
 function CaptureScreen() {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         desktopCapturer.getSources({ types: ['screen'], thumbnailSize: { width: screenWidth, height: screenHeight } },
             (error, sources) => {
                 if (error) console.error(error);
@@ -50,15 +50,25 @@ function CaptureScreen() {
 }
 
 const agentName = document.getElementById('agentName');
+const agentPass = document.getElementById('agentPass');
+const searchBtn = document.getElementById('searchAgent');
 const startCastBtn = document.getElementById('startCast');
-const stopCastBtn = document.getElementById('stopCast');
+//const stopCastBtn = document.getElementById('stopCast');
 const messageInput = document.getElementById('messageInput');
+const login = document.getElementById('login');
+const chat = document.getElementById('chat');
 
-stopCastBtn.setAttribute("disabled", "disabled");
+startCastBtn.setAttribute("disabled", "disabled");
+searchBtn.setAttribute("disabled", "disabled");
+//stopCastBtn.setAttribute("disabled", "disabled");
 
-startCastBtn.onclick = function () {
+
+
+startCastBtn.onclick = function() {
     startCastBtn.setAttribute("disabled", "disabled");
-    stopCastBtn.removeAttribute("disabled");
+    login.style.display = 'none';
+    chat.style.display = 'unset';
+    //stopCastBtn.removeAttribute("disabled");
     connection.send("AddScreenCastAgent", agentName.value);
 };
 
@@ -66,9 +76,9 @@ function startStreamCast() {
     isStreaming = true;
     subject = new signalR.Subject();
     connection.send("StreamCastData", subject, agentName.value);
-    screenCastTimer = setInterval(function () {
+    screenCastTimer = setInterval(function() {
         try {
-            CaptureScreen().then(function (data) {
+            CaptureScreen().then(function(data) {
                 subject.next(data);
             });
 
@@ -87,17 +97,17 @@ function stopStreamCast() {
     }
 }
 
-stopCastBtn.onclick = function () {
+/*stopCastBtn.onclick = function() {
     stopCastBtn.setAttribute("disabled", "disabled");
     startCastBtn.removeAttribute("disabled");
     stopStreamCast();
     connection.send("RemoveScreenCastAgent", agentName.value);
 };
-
+*/
 //Disable send button until connection is established
 
 
-connection.on("ReceiveMessage", function (user, message) {
+connection.on("ReceiveMessage", function(user, message) {
     var li = document.createElement("li");
     var image;
     switch (message) {
@@ -118,7 +128,7 @@ connection.on("ReceiveMessage", function (user, message) {
             break;
         default:
             var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            var encodedMsg = new Date().toLocaleString() + " - <b>" + user + ": </b>" + msg;
+            var encodedMsg = "<b>" + user + ": </b>" + msg;
             li.innerHTML = encodedMsg;
             break;
     }
@@ -126,25 +136,25 @@ connection.on("ReceiveMessage", function (user, message) {
     if (message == "#image_01#" || message == "#image_02#" ||
         message == "#image_03#" || message == "#image_04#" ||
         message == "#image_05#") {
-        li.innerHTML = new Date().toLocaleString() +
-            " - <img style=\"vertical-align:middle\" height=\"30\" width=\"30\" src=\"https://localhost:5001/img/" + image + "\" />";
+        li.innerHTML =
+            "<img style=\"vertical-align:middle\" height=\"30\" width=\"30\" src=\"https://localhost:5001/img/" + image + "\" />";
 
         document.getElementById("lastStatus").innerHTML =
-            "<img height=\"90\" width=\"90\" src=\"https://localhost:5001/img/" + image + "\" />";
+            "<img height=\"90\" width=\"90\" src=\"https://localhost:5001/img/big/" + image + "\" />";
     }
     document.getElementById("messagesList").appendChild(li);
     li.scrollIntoView();
 });
 
-connection.start().then(function () {
+connection.start().then(function() {
     document.getElementById("sendButton").disabled = false;
-}).catch(function (err) {
+}).catch(function(err) {
     return console.error(err.toString());
 });
 
-sendButton.onclick = function () {
+sendButton.onclick = function() {
     var message = document.getElementById("messageInput").value;
-    connection.invoke("SendMessage", agentName.value, message).catch(function (err) {
+    connection.invoke("SendMessage", agentName.value, message).catch(function(err) {
         return console.error(err.toString());
     });
     messageInput.value = "";
@@ -153,7 +163,7 @@ sendButton.onclick = function () {
 messageInput.onkeypress = (event) => {
     if (event.keyCode == 13) {
         var message = document.getElementById("messageInput").value;
-        connection.invoke("SendMessage", agentName.value, message).catch(function (err) {
+        connection.invoke("SendMessage", agentName.value, message).catch(function(err) {
             return console.error(err.toString());
         });
         messageInput.value = "";
@@ -163,9 +173,21 @@ messageInput.onkeypress = (event) => {
 messageInput.setAttribute("disabled", "disabled");
 
 agentName.onkeyup = () => {
-    if (agentName.value != "") {
+    if (agentName.value != "" && agentPass.value != "") {
+        searchBtn.removeAttribute("disabled");
         messageInput.disabled = false;
-    } else{
+    } else {
+        searchBtn.setAttribute("disabled", "disabled");
         messageInput.disabled = true;
     }
-} 
+}
+
+agentPass.onkeyup = () => {
+    if (agentName.value != "" && agentPass.value != "") {
+        searchBtn.removeAttribute("disabled");
+        messageInput.disabled = false;
+    } else {
+        searchBtn.setAttribute("disabled", "disabled");
+        messageInput.disabled = true;
+    }
+}

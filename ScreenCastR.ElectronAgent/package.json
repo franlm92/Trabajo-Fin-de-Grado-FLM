@@ -15,9 +15,12 @@
   ],
   "author": "Francisco López Muñoz",
   "devDependencies": {
-    "electron": "^6.0.0"
+    "electron": "^6.0.0",
+    "electron-packager": "^14.2.0"
   },
   "dependencies": {
-    "@microsoft/signalr": "^3.0.0-preview8.19405.7"
+    "@microsoft/signalr": "^3.0.0-preview8.19405.7",
+    "mongodb": "^3.6.0",
+    "requirejs": "^2.3.6"
   }
 }

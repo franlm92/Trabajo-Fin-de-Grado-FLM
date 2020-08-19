@@ -1,0 +1,62 @@
+form {
+    margin: 0 auto;
+    width: 200px;
+    height: 300px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+label {
+    display: inline-block;
+    width: 90px;
+}
+
+h4 {
+    text-align: center;
+    font: 1em sans-serif;
+}
+
+input,
+text {
+    font: 1em sans-serif;
+    width: 150px;
+    box-sizing: border-box;
+    border: 1px solid #999;
+}
+
+input:focus,
+text:focus {
+    border-color: #000;
+}
+
+.button {
+    padding-left: 90px;
+}
+
+button {
+    margin-left: .5em;
+}
+
+submit {
+    text-align: center;
+    display: flex;
+}
+
+div .col-6 {
+    text-align: left;
+}
+
+input:invalid,
+ :-moz-submit-invalid {
+    border-color: #900;
+    background-color: #FDD;
+}
+
+input:focus:invalid,
+ :-moz-submit-invalid:focus {
+    outline: none;
+}

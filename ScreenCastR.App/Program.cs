@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
+using ScreenCastApp.Controllers;
+using ScreenCastApp.Services;
 
 namespace ScreenCastApp
 {
@@ -22,8 +18,10 @@ namespace ScreenCastApp
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    UserController userController = new UserController();
+                                   
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("https://192.168.1.158:5001", "https://localhost:5001", "http://192.168.1.158:5000", "http://localhost:5000");
+                    webBuilder.UseUrls("https://localhost:5001", "http://localhost:5000");
                 });
     }
 }
