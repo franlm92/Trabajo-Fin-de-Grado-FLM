@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@asymmetrik/node-fhir-server-core": "^2.0.4",
-    "fast-json-patch": "^2.0.7",
+    "fast-json-patch": "^3.1.1",
     "kafka-node": "^5.0.0",
     "moment-timezone": "^0.5.14",
     "mongo": "^0.1.0",
